@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>居间费计算器</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <!-- 修复Tailwind CSS跨域加载问题 -->
+    <script src="https://cdn.tailwindcss.com" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js" crossorigin="anonymous"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -50,7 +51,7 @@
     <header class="bg-white shadow-sm sticky top-0 z-10">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
             <div class="flex items-center space-x-2">
-                <i class="fa fa-calculator text-primary text-2xl"></i>
+                <<i class="fa fa-calculator text-primary text-2xl"></</i>
                 <h1 class="text-xl md:text-2xl font-bold text-primary">居间费计算器</h1>
             </div>
         </div>
@@ -81,7 +82,7 @@
             <div id="forward-calculator" class="mb-10">
                 <div class="bg-white rounded-xl p-6 card-shadow transition-custom mb-6">
                     <h3 class="text-lg font-semibold mb-6 flex items-center">
-                        <i class="fa fa-pencil-square-o text-primary mr-2"></i>输入参数
+                        <<i class="fa fa-pencil-square-o text-primary mr-2"></</i>输入参数
                     </h3>
                     
                     <form id="forward-form" class="grid md:grid-cols-2 gap-6">
@@ -92,9 +93,12 @@
                             </label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <i class="fa fa-rmb text-gray-400"></i>
+                                    <<i class="fa fa-rmb text-gray-400"></</i>
                                 </div>
-                                <input type="number" id="forward-contract-amount" name="forward-contract-amount" class="pl-10 pr-3 py-3 w-full rounded-lg border border-gray-300 input-focus transition-custom" placeholder="请输入合同总额" required min="0" step="0.01">
+                                <input type="number" id="forward-contract-amount" name="forward-contract-amount" 
+                                    class="pl-10 pr-3 py-3 w-full rounded-lg border border-gray-300 input-focus transition-custom" 
+                                    placeholder="请输入合同总额" required min="0.01" step="0.01"
+                                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/\.{2,}/g, '.').replace(/^\./g, '').replace(/\.(?=.*\.)/g, '');">
                             </div>
                         </div>
 
@@ -105,16 +109,19 @@
                             </label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <i class="fa fa-money text-gray-400"></i>
+                                    <<i class="fa fa-money text-gray-400"></</i>
                                 </div>
-                                <input type="number" id="forward-intermediary-fee" name="forward-intermediary-fee" class="pl-10 pr-3 py-3 w-full rounded-lg border border-gray-300 input-focus transition-custom" placeholder="请输入居间费总额" required min="0" step="0.01">
+                                <input type="number" id="forward-intermediary-fee" name="forward-intermediary-fee" 
+                                    class="pl-10 pr-3 py-3 w-full rounded-lg border border-gray-300 input-focus transition-custom" 
+                                    placeholder="请输入居间费总额" required min="0.01" step="0.01"
+                                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/\.{2,}/g, '.').replace(/^\./g, '').replace(/\.(?=.*\.)/g, '');">
                             </div>
                         </div>
 
                         <!-- 计算按钮 -->
                         <div class="md:col-span-2 pt-2">
                             <button type="submit" class="bg-primary hover:bg-primary/90 text-white font-medium py-3 px-6 rounded-lg transition-custom flex items-center">
-                                <i class="fa fa-calculator mr-2"></i>
+                                <<i class="fa fa-calculator mr-2"></</i>
                                 计算所有结果
                             </button>
                         </div>
@@ -126,10 +133,10 @@
                     <div class="bg-white rounded-xl p-6 card-shadow transition-custom">
                         <div class="flex justify-between items-center mb-6">
                             <h3 class="text-lg font-semibold flex items-center">
-                                <i class="fa fa-bar-chart text-primary mr-2"></i>计算结果
+                                <<i class="fa fa-bar-chart text-primary mr-2"></</i>计算结果
                             </h3>
                             <button id="export-forward-btn" class="text-primary hover:text-primary/80 font-medium py-2 px-4 rounded-lg transition-custom flex items-center border border-primary/30 hover:bg-primary/5">
-                                <i class="fa fa-download mr-2"></i>
+                                <<i class="fa fa-download mr-2"></</i>
                                 导出到Excel
                             </button>
                         </div>
@@ -159,11 +166,11 @@
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-light">
                                     <tr>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">类型</th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">细分类型</th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">可扣除金额</th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">扣除金额</th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">应支付居间费（元）</th>
+                                        <<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">类型</</th>
+                                        <<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">细分类型</</th>
+                                        <<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">可扣除金额</</th>
+                                        <<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">扣除金额</</th>
+                                        <<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">应支付居间费（元）</</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200" id="forward-results-table">
@@ -179,7 +186,7 @@
             <div id="reverse-calculator" class="hidden mb-10">
                 <div class="bg-white rounded-xl p-6 card-shadow transition-custom mb-6">
                     <h3 class="text-lg font-semibold mb-6 flex items-center">
-                        <i class="fa fa-pencil-square-o text-primary mr-2"></i>反算参数
+                        <<i class="fa fa-pencil-square-o text-primary mr-2"></</i>反算参数
                     </h3>
                     
                     <form id="reverse-form" class="grid md:grid-cols-2 gap-6">
@@ -190,9 +197,12 @@
                             </label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <i class="fa fa-rmb text-gray-400"></i>
+                                    <<i class="fa fa-rmb text-gray-400"></</i>
                                 </div>
-                                <input type="number" id="reverse-contract-amount" name="reverse-contract-amount" class="pl-10 pr-3 py-3 w-full rounded-lg border border-gray-300 input-focus transition-custom" placeholder="请输入合同总额" required min="0" step="0.01">
+                                <input type="number" id="reverse-contract-amount" name="reverse-contract-amount" 
+                                    class="pl-10 pr-3 py-3 w-full rounded-lg border border-gray-300 input-focus transition-custom" 
+                                    placeholder="请输入合同总额" required min="0.01" step="0.01"
+                                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/\.{2,}/g, '.').replace(/^\./g, '').replace(/\.(?=.*\.)/g, '');">
                             </div>
                         </div>
 
@@ -203,16 +213,19 @@
                             </label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <i class="fa fa-money text-gray-400"></i>
+                                    <<i class="fa fa-money text-gray-400"></</i>
                                 </div>
-                                <input type="number" id="reverse-payable-fee" name="reverse-payable-fee" class="pl-10 pr-3 py-3 w-full rounded-lg border border-gray-300 input-focus transition-custom" placeholder="请输入应支付居间费" required min="0" step="0.01">
+                                <input type="number" id="reverse-payable-fee" name="reverse-payable-fee" 
+                                    class="pl-10 pr-3 py-3 w-full rounded-lg border border-gray-300 input-focus transition-custom" 
+                                    placeholder="请输入应支付居间费" required min="0.01" step="0.01"
+                                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/\.{2,}/g, '.').replace(/^\./g, '').replace(/\.(?=.*\.)/g, '');">
                             </div>
                         </div>
 
                         <!-- 计算按钮 -->
                         <div class="md:col-span-2 pt-2">
                             <button type="submit" class="bg-primary hover:bg-primary/90 text-white font-medium py-3 px-6 rounded-lg transition-custom flex items-center">
-                                <i class="fa fa-calculator mr-2"></i>
+                                <<i class="fa fa-calculator mr-2"></</i>
                                 反算居间费金额（高精度）
                             </button>
                         </div>
@@ -224,10 +237,10 @@
                     <div class="bg-white rounded-xl p-6 card-shadow transition-custom">
                         <div class="flex justify-between items-center mb-6">
                             <h3 class="text-lg font-semibold flex items-center">
-                                <i class="fa fa-bar-chart text-primary mr-2"></i>反算结果（高精度验证）
+                                <<i class="fa fa-bar-chart text-primary mr-2"></</i>反算结果（高精度验证）
                             </h3>
                             <button id="export-reverse-btn" class="text-primary hover:text-primary/80 font-medium py-2 px-4 rounded-lg transition-custom flex items-center border border-primary/30 hover:bg-primary/5">
-                                <i class="fa fa-download mr-2"></i>
+                                <<i class="fa fa-download mr-2"></</i>
                                 导出到Excel
                             </button>
                         </div>
@@ -257,12 +270,12 @@
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-light">
                                     <tr>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">类型</th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">细分类型</th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">反算不含税居间费（元）</th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">验证结果（正向计算）</th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">误差（元）</th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">反算居间费总额（元）</th>
+                                        <<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">类型</</th>
+                                        <<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">细分类型</</th>
+                                        <<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">反算不含税居间费（元）</</th>
+                                        <<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">验证结果（正向计算）</</th>
+                                        <<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">误差（元）</</th>
+                                        <<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">反算居间费总额（元）</</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200" id="reverse-results-table">
@@ -277,509 +290,3 @@
     </main>
 
     <!-- 页脚 -->
-    <footer class="bg-white border-t border-gray-200 py-6">
-        <div class="container mx-auto px-4 text-center text-sm text-gray-500">
-            <p>居间费计算器 © 2023 | 高精度计算工具，误差控制在0.1元以内</p>
-        </div>
-    </footer>
-
-    <script>
-        // DOM 元素
-        const forwardCalcBtn = document.getElementById('forward-calc-btn');
-        const reverseCalcBtn = document.getElementById('reverse-calc-btn');
-        const forwardCalculator = document.getElementById('forward-calculator');
-        const reverseCalculator = document.getElementById('reverse-calculator');
-        const forwardForm = document.getElementById('forward-form');
-        const reverseForm = document.getElementById('reverse-form');
-        const forwardResults = document.getElementById('forward-results');
-        const reverseResults = document.getElementById('reverse-results');
-        const exportForwardBtn = document.getElementById('export-forward-btn');
-        const exportReverseBtn = document.getElementById('export-reverse-btn');
-        
-        // 正向计算结果元素
-        const forwardResultContractAmount = document.getElementById('forward-result-contract-amount');
-        const forwardResultIntermediaryFee = document.getElementById('forward-result-intermediary-fee');
-        const forwardResultIncomeAmount = document.getElementById('forward-result-income-amount');
-        const forwardResultTaxFreeFee = document.getElementById('forward-result-tax-free-fee');
-        const forwardResultsTable = document.getElementById('forward-results-table');
-        
-        // 反算结果元素
-        const reverseResultContractAmount = document.getElementById('reverse-result-contract-amount');
-        const reverseResultPayableFee = document.getElementById('reverse-result-payable-fee');
-        const reverseResultIncomeAmount = document.getElementById('reverse-result-income-amount');
-        const reverseResultsTable = document.getElementById('reverse-results-table');
-        
-        // 计算精度设置
-        const PRECISION = 0.1; // 目标精度：误差≤0.1元
-        const MAX_ITERATIONS = 100; // 最大迭代次数
-        const EPSILON = 0.001; // 微小扰动值，用于计算导数
-        
-        // 格式化金额显示
-        function formatCurrency(amount) {
-            return new Intl.NumberFormat('zh-CN', {
-                style: 'currency',
-                currency: 'CNY',
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-            }).format(amount);
-        }
-        
-        // 切换计算类型
-        forwardCalcBtn.addEventListener('click', () => {
-            forwardCalculator.classList.remove('hidden');
-            reverseCalculator.classList.add('hidden');
-            forwardCalcBtn.classList.remove('bg-white', 'text-gray-700', 'border-gray-200');
-            forwardCalcBtn.classList.add('bg-primary', 'text-white', 'border-primary');
-            reverseCalcBtn.classList.remove('bg-primary', 'text-white', 'border-primary');
-            reverseCalcBtn.classList.add('bg-white', 'text-gray-700', 'border-gray-200');
-        });
-        
-        reverseCalcBtn.addEventListener('click', () => {
-            reverseCalculator.classList.remove('hidden');
-            forwardCalculator.classList.add('hidden');
-            reverseCalcBtn.classList.remove('bg-white', 'text-gray-700', 'border-gray-200');
-            reverseCalcBtn.classList.add('bg-primary', 'text-white', 'border-primary');
-            forwardCalcBtn.classList.remove('bg-primary', 'text-white', 'border-primary');
-            forwardCalcBtn.classList.add('bg-white', 'text-gray-700', 'border-gray-200');
-        });
-        
-        // 正向计算：计算指定类型的居间费（返回精确值，不四舍五入）
-        function calculateTypePrecise(contractAmount, intermediaryFee, type, subType) {
-            // 基础计算
-            const incomeAmount = contractAmount / 1.13; // 收入金额
-            const taxFreeIntermediaryFee = intermediaryFee / 1.13; // 不含税居间费
-            const deductible5Percent = incomeAmount * 0.05; // 收入金额的5%
-            
-            // 业务招待费特殊参数
-            const income0_5Percent = incomeAmount * 0.005; // 收入金额的0.5%
-            const fee60Percent = taxFreeIntermediaryFee * 0.6; // 居间费不含税金额的60%
-            const businessDeductible = Math.min(income0_5Percent, fee60Percent); // 两者孰低
-            
-            let result = {
-                type,
-                subType,
-                deductible: 0,
-                deduction: 0,
-                payable: 0,
-                payableRaw: 0 // 未四舍五入的原始值，用于高精度计算
-            };
-            
-            // 根据类型计算
-            if (type === "发票" && subType === "普票") {
-                if (taxFreeIntermediaryFee <= deductible5Percent) {
-                    result.payableRaw = taxFreeIntermediaryFee;
-                    result.deductible = deductible5Percent;
-                    result.deduction = 0;
-                } else {
-                    result.deduction = (taxFreeIntermediaryFee - deductible5Percent) * 0.15;
-                    result.payableRaw = taxFreeIntermediaryFee - result.deduction;
-                    result.deductible = deductible5Percent;
-                }
-            } 
-            else if (type === "发票" && subType.startsWith("专票")) {
-                const taxRate = parseFloat(subType.match(/\d+/)[0]) / 100;
-                if (taxFreeIntermediaryFee <= deductible5Percent) {
-                    result.payableRaw = taxFreeIntermediaryFee * (1 + taxRate);
-                    result.deductible = deductible5Percent;
-                    result.deduction = 0;
-                } else {
-                    result.deduction = (taxFreeIntermediaryFee - deductible5Percent) * 0.15;
-                    result.payableRaw = (taxFreeIntermediaryFee - result.deduction) * (1 + taxRate);
-                    result.deductible = deductible5Percent;
-                }
-            }
-            else if (type === "业务招待费") {
-                if (taxFreeIntermediaryFee <= businessDeductible) {
-                    result.payableRaw = taxFreeIntermediaryFee;
-                    result.deductible = businessDeductible;
-                    result.deduction = 0;
-                } else {
-                    result.deduction = (taxFreeIntermediaryFee - businessDeductible) * 0.15;
-                    result.payableRaw = taxFreeIntermediaryFee - result.deduction;
-                    result.deductible = businessDeductible;
-                }
-            }
-            
-            result.payable = Math.round(result.payableRaw); // 最终显示值（四舍五入到整数）
-            return result;
-        }
-        
-        // 正向计算：计算所有类型的居间费
-        function calculateAllTypes(contractAmount, intermediaryFee) {
-            // 基础计算
-            const incomeAmount = contractAmount / 1.13; // 收入金额
-            const taxFreeIntermediaryFee = intermediaryFee / 1.13; // 不含税居间费
-            
-            // 计算所有类型
-            const results = [
-                calculateTypePrecise(contractAmount, intermediaryFee, "发票", "普票"),
-                calculateTypePrecise(contractAmount, intermediaryFee, "发票", "专票（1%）"),
-                calculateTypePrecise(contractAmount, intermediaryFee, "发票", "专票（3%）"),
-                calculateTypePrecise(contractAmount, intermediaryFee, "发票", "专票（6%）"),
-                calculateTypePrecise(contractAmount, intermediaryFee, "业务招待费", "-")
-            ];
-            
-            return {
-                contractAmount,
-                intermediaryFee,
-                incomeAmount,
-                taxFreeIntermediaryFee,
-                results
-            };
-        }
-        
-        // 牛顿迭代法求解方程 f(x) = target
-        // 找到x使得 calculateTypePrecise(contractAmount, x, type, subType).payableRaw = target
-        function newtonRaphsonSolve(contractAmount, target, type, subType) {
-            // 定义目标函数：f(x) = 计算结果 - 目标值
-            function f(x) {
-                return calculateTypePrecise(contractAmount, x, type, subType).payableRaw - target;
-            }
-            
-            // 计算导数（使用数值微分）
-            function df(x) {
-                return (f(x + EPSILON) - f(x - EPSILON)) / (2 * EPSILON);
-            }
-            
-            // 初始猜测值
-            let x0;
-            if (type === "发票" && subType === "普票") {
-                x0 = target * 1.13; // 普票初始猜测
-            } else if (type === "发票" && subType === "专票（1%）") {
-                x0 = (target / 1.01) * 1.13; // 专票1%初始猜测
-            } else if (type === "发票" && subType === "专票（3%）") {
-                x0 = (target / 1.03) * 1.13; // 专票3%初始猜测
-            } else if (type === "发票" && subType === "专票（6%）") {
-                x0 = (target / 1.06) * 1.13; // 专票6%初始猜测
-            } else { // 业务招待费
-                x0 = target * 1.13; // 业务招待费初始猜测
-            }
-            
-            // 确保初始值为正数
-            if (x0 <= 0) x0 = 100;
-            
-            let x1;
-            let iterations = 0;
-            
-            // 迭代求解
-            do {
-                const fx = f(x0);
-                const dfx = df(x0);
-                
-                // 防止除以零
-                if (Math.abs(dfx) < 1e-10) {
-                    // 如果导数接近零，使用简单搜索法
-                    x1 = x0 + (fx > 0 ? -10 : 10);
-                } else {
-                    // 牛顿迭代公式
-                    x1 = x0 - fx / dfx;
-                }
-                
-                // 确保解为正数
-                if (x1 <= 0) x1 = 0.1;
-                
-                // 检查是否收敛
-                const error = Math.abs(x1 - x0);
-                if (error < PRECISION / 100) break;
-                
-                x0 = x1;
-                iterations++;
-            } while (iterations < MAX_ITERATIONS);
-            
-            // 验证最终解
-            const finalResult = calculateTypePrecise(contractAmount, x1, type, subType);
-            const finalError = Math.abs(finalResult.payableRaw - target);
-            
-            // 如果牛顿法不收敛，使用二分法作为后备
-            if (finalError > PRECISION) {
-                x1 = binarySearchSolve(contractAmount, target, type, subType);
-            }
-            
-            return x1;
-        }
-        
-        // 二分法求解（作为牛顿法的后备）
-        function binarySearchSolve(contractAmount, target, type, subType) {
-            // 定义目标函数
-            function f(x) {
-                return calculateTypePrecise(contractAmount, x, type, subType).payableRaw;
-            }
-            
-            // 确定搜索范围
-            let low = 0.1;
-            let high = target * 10; // 初始上限设为目标值的10倍
-            
-            // 扩展上限直到找到函数值大于目标的点
-            while (f(high) < target && high < 1e12) {
-                high *= 2;
-            }
-            
-            let mid, fmid;
-            let iterations = 0;
-            
-            // 二分搜索
-            do {
-                mid = (low + high) / 2;
-                fmid = f(mid);
-                
-                if (fmid < target) {
-                    low = mid;
-                } else {
-                    high = mid;
-                }
-                
-                iterations++;
-            } while (Math.abs(fmid - target) > PRECISION && iterations < MAX_ITERATIONS);
-            
-            return mid;
-        }
-        
-        // 反算特定类型的居间费（高精度版本）
-        function reverseCalculateType(contractAmount, payableFee, type, subType) {
-            // 使用牛顿迭代法求解
-            const original = newtonRaphsonSolve(contractAmount, payableFee, type, subType);
-            
-            // 计算不含税金额
-            const taxFree = original / 1.13;
-            
-            // 正向验证
-            const verifiedResult = calculateTypePrecise(contractAmount, original, type, subType);
-            const error = Math.abs(verifiedResult.payableRaw - payableFee);
-            
-            // 格式化结果（保留两位小数）
-            const formattedOriginal = Math.round(original * 100) / 100;
-            const formattedTaxFree = Math.round(taxFree * 100) / 100;
-            
-            // 确保返回正确的类型信息，修复undefined问题
-            return {
-                type: type,
-                subType: subType,
-                original: formattedOriginal,
-                taxFree: formattedTaxFree,
-                verifiedPayable: verifiedResult.payableRaw,
-                error: error
-            };
-        }
-        
-        // 反算：根据合同金额和应支付居间费计算原始居间费（高精度版本）
-        function reverseCalculate(contractAmount, payableFee) {
-            // 基础计算
-            const incomeAmount = contractAmount / 1.13; // 收入金额
-            
-            // 反算所有类型，确保类型参数正确传递
-            const results = [
-                reverseCalculateType(contractAmount, payableFee, "发票", "普票"),
-                reverseCalculateType(contractAmount, payableFee, "发票", "专票（1%）"),
-                reverseCalculateType(contractAmount, payableFee, "发票", "专票（3%）"),
-                reverseCalculateType(contractAmount, payableFee, "发票", "专票（6%）"),
-                reverseCalculateType(contractAmount, payableFee, "业务招待费", "-")
-            ];
-            
-            return {
-                contractAmount,
-                payableFee,
-                incomeAmount,
-                results
-            };
-        }
-        
-        // 显示正向计算结果
-        function displayForwardResults(results) {
-            // 显示结果区域
-            forwardResults.classList.remove('hidden');
-            
-            // 填充基础信息
-            forwardResultContractAmount.textContent = formatCurrency(results.contractAmount);
-            forwardResultIntermediaryFee.textContent = formatCurrency(results.intermediaryFee);
-            forwardResultIncomeAmount.textContent = formatCurrency(results.incomeAmount);
-            forwardResultTaxFreeFee.textContent = formatCurrency(results.taxFreeIntermediaryFee);
-            
-            // 填充结果表格
-            forwardResultsTable.innerHTML = '';
-            results.results.forEach(item => {
-                const row = document.createElement('tr');
-                row.className = 'hover:bg-gray-50 transition-custom';
-                row.innerHTML = `
-                    <td class="px-6 py-4 whitespace-nowrap">${item.type}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">${item.subType}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">${formatCurrency(item.deductible)}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">${formatCurrency(item.deduction)}</td>
-                    <td class="px-6 py-4 whitespace-nowrap font-medium text-primary">${formatCurrency(item.payable)}</td>
-                `;
-                forwardResultsTable.appendChild(row);
-            });
-        }
-        
-        // 显示反算结果
-        function displayReverseResults(results) {
-            // 显示结果区域
-            reverseResults.classList.remove('hidden');
-            
-            // 填充基础信息
-            reverseResultContractAmount.textContent = formatCurrency(results.contractAmount);
-            reverseResultPayableFee.textContent = formatCurrency(results.payableFee);
-            reverseResultIncomeAmount.textContent = formatCurrency(results.incomeAmount);
-            
-            // 填充结果表格，反算居间费总额放在最后一列
-            reverseResultsTable.innerHTML = '';
-            results.results.forEach(item => {
-                const row = document.createElement('tr');
-                row.className = 'hover:bg-gray-50 transition-custom';
-                row.innerHTML = `
-                    <td class="px-6 py-4 whitespace-nowrap">${item.type}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">${item.subType}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">${formatCurrency(item.taxFree)}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">${formatCurrency(item.verifiedPayable)}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-success">${item.error.toFixed(4)}</td>
-                    <td class="px-6 py-4 whitespace-nowrap font-medium text-primary">${formatCurrency(item.original)}</td>
-                `;
-                reverseResultsTable.appendChild(row);
-            });
-        }
-        
-        // 导出正向计算结果到Excel
-        function exportForwardResults() {
-            const contractAmount = parseFloat(document.getElementById('forward-contract-amount').value);
-            const intermediaryFee = parseFloat(document.getElementById('forward-intermediary-fee').value);
-            
-            if (isNaN(contractAmount) || isNaN(intermediaryFee) || contractAmount <= 0 || intermediaryFee <= 0) {
-                alert('请先输入有效的计算参数并获取结果');
-                return;
-            }
-            
-            const results = calculateAllTypes(contractAmount, intermediaryFee);
-            
-            // 准备导出数据，保持与表格相同的列顺序
-            const exportData = [
-                ["居间费计算结果"],
-                ["合同总额", formatCurrency(results.contractAmount)],
-                ["居间费总额", formatCurrency(results.intermediaryFee)],
-                ["收入金额（合同总额/1.13）", formatCurrency(results.incomeAmount)],
-                ["不含税居间费（居间费/1.13）", formatCurrency(results.taxFreeIntermediaryFee)],
-                [],
-                ["类型", "细分类型", "可扣除金额", "扣除金额", "应支付居间费（元）"]
-            ];
-            
-            // 添加结果数据
-            results.results.forEach(item => {
-                exportData.push([
-                    item.type,
-                    item.subType,
-                    formatCurrency(item.deductible),
-                    formatCurrency(item.deduction),
-                    formatCurrency(item.payable)
-                ]);
-            });
-            
-            // 创建工作簿和工作表
-            const ws = XLSX.utils.aoa_to_sheet(exportData);
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, "正向计算结果");
-            
-            // 导出文件
-            XLSX.writeFile(wb, "居间费正向计算结果.xlsx");
-        }
-        
-        // 导出反算结果到Excel
-        function exportReverseResults() {
-            const contractAmount = parseFloat(document.getElementById('reverse-contract-amount').value);
-            const payableFee = parseFloat(document.getElementById('reverse-payable-fee').value);
-            
-            if (isNaN(contractAmount) || isNaN(payableFee) || contractAmount <= 0 || payableFee <= 0) {
-                alert('请先输入有效的反算参数并获取结果');
-                return;
-            }
-            
-            const results = reverseCalculate(contractAmount, payableFee);
-            
-            // 准备导出数据，保持与表格相同的列顺序
-            const exportData = [
-                ["居间费反算结果（高精度）"],
-                ["合同总额", formatCurrency(results.contractAmount)],
-                ["输入的应支付居间费", formatCurrency(results.payableFee)],
-                ["收入金额（合同总额/1.13）", formatCurrency(results.incomeAmount)],
-                ["计算精度", `误差≤${PRECISION}元`],
-                [],
-                ["类型", "细分类型", "反算不含税居间费（元）", "验证结果（正向计算）", "误差（元）", "反算居间费总额（元）"]
-            ];
-            
-            // 添加结果数据
-            results.results.forEach(item => {
-                exportData.push([
-                    item.type,
-                    item.subType,
-                    formatCurrency(item.taxFree),
-                    formatCurrency(item.verifiedPayable),
-                    item.error.toFixed(4),
-                    formatCurrency(item.original)
-                ]);
-            });
-            
-            // 创建工作簿和工作表
-            const ws = XLSX.utils.aoa_to_sheet(exportData);
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, "反算结果");
-            
-            // 导出文件
-            XLSX.writeFile(wb, "居间费反算结果.xlsx");
-        }
-        
-        // 正向计算表单提交
-        forwardForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const contractAmount = parseFloat(document.getElementById('forward-contract-amount').value);
-            const intermediaryFee = parseFloat(document.getElementById('forward-intermediary-fee').value);
-            
-            // 验证输入
-            if (isNaN(contractAmount) || contractAmount <= 0) {
-                alert('请输入有效的合同总额');
-                return;
-            }
-            
-            if (isNaN(intermediaryFee) || intermediaryFee <= 0) {
-                alert('请输入有效的居间费总额');
-                return;
-            }
-            
-            // 计算并显示所有结果
-            const results = calculateAllTypes(contractAmount, intermediaryFee);
-            displayForwardResults(results);
-            
-            // 平滑滚动到结果区域
-            forwardResults.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
-        
-        // 反算表单提交
-        reverseForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const contractAmount = parseFloat(document.getElementById('reverse-contract-amount').value);
-            const payableFee = parseFloat(document.getElementById('reverse-payable-fee').value);
-            
-            // 验证输入
-            if (isNaN(contractAmount) || contractAmount <= 0) {
-                alert('请输入有效的合同总额');
-                return;
-            }
-            
-            if (isNaN(payableFee) || payableFee <= 0) {
-                alert('请输入有效的应支付居间费');
-                return;
-            }
-            
-            // 反算并显示所有结果
-            const results = reverseCalculate(contractAmount, payableFee);
-            displayReverseResults(results);
-            
-            // 平滑滚动到结果区域
-            reverseResults.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
-        
-        // 绑定导出按钮事件
-        exportForwardBtn.addEventListener('click', exportForwardResults);
-        exportReverseBtn.addEventListener('click', exportReverseResults);
-    </script>
-</body>
-</html>
-    
